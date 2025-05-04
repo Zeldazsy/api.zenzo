@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script"; // ✅ use next/script
 import "./globals.css";
 
 const geistSans = Geist({
@@ -18,14 +19,25 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* ✅ Tailwind CDN loaded before page interactive, but safely */}
+        <Script
+          src="https://cdn.tailwindcss.com"
+          strategy="beforeInteractive"
+        />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+        <div className="container mx-auto px-4 py-8">
+          <h1 className="text-3xl font-bold">Welcome to the Zenzo API!</h1>
+          <p className="mt-4 text-lg">
+            This is API built with Next.js and MongoDB.
+          </p>
+        </div>
       </body>
     </html>
   );
