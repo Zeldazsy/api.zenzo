@@ -1,11 +1,7 @@
 import { NextResponse } from "next/server";
-import { nanoid } from "nanoid";
-import getMongoClient from "@/app/lib/mongo";
-
-const KEY_DURATION_MS = 8 * 60 * 60 * 1000; // 8 ชั่วโมง
+import getMongoClient from "../../lib/mongo";
 
 const devBypassTokens = ["testtoken123"];
-
 
 async function validateToken(token: string) {
   if (devBypassTokens.includes(token)) return true;
@@ -21,25 +17,22 @@ async function validateToken(token: string) {
   return true;
 }
 
-async function generateKey(discord_id: string) {
+async function Reset(discord_id: string) {
   const client = await getMongoClient();
   const db = client.db("lootlabs");
   const keys = db.collection("keys");
 
-  const key = nanoid(16);
-  const now = new Date();
-  const expiredAt = new Date(now.getTime() + KEY_DURATION_MS);
 
-  await keys.insertOne({
-    discord_id,
-    key,
-    createdAt: now,
-    expiredAt,
-    used: false,
-    hwid: "Null",
-  });
+  await keys.updateOne(
+    { discord_id },
+    {
+      $set: {
+        hwid: 'Null',
+      },
+    }
+  );
 
-  return key;
+  return true;
 }
 
 export async function GET(req: Request) {
@@ -69,27 +62,6 @@ export async function GET(req: Request) {
     );
   }
 
-  const client = await getMongoClient();
-  const db = client.db("lootlabs");
-  const keys = db.collection("keys");
-  const now = new Date();
-
-  const existingKey = await keys.findOne({ discord_id });
-
-  if (existingKey) {
-    const keyExpiry = new Date(existingKey.expiredAt);
-    const newExpiry =
-      keyExpiry > now
-        ? new Date(keyExpiry.getTime() + KEY_DURATION_MS)
-        : new Date(now.getTime() + KEY_DURATION_MS);
-
-    await keys.updateOne(
-      { discord_id },
-      { $set: { expiredAt: newExpiry } }
-    );
-
-    return NextResponse.redirect(new URL(`/getkey?type=success&meg=Key extended 8 hours`, req.url));
-  }
-await generateKey(discord_id);
-return NextResponse.redirect(new URL(`/getkey?type=success&meg=Key generated`, req.url));
+await Reset(discord_id);
+return NextResponse.redirect(new URL(`/getkey?type=success&meg=Reset HWID Successfuly`, req.url));
 }

@@ -1,5 +1,5 @@
 // 'use server';
-import clientPromise from '@/app/lib/mongo.server';
+import clientPromise from '@/app/lib/mongo.server'; // Adjust the import path as necessary
 
 export async function POST(request: Request) {
   try {

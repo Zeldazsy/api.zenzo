@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import clientPromise from '@/app/lib/mongo.server';
+import clientPromise from '@/app/lib/mongo.server'; // Adjust the import path as necessary
 
 
 // Handles POST requests
