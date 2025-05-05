@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
+  children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
@@ -32,12 +33,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <div className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold">Welcome to the Zenzo API!</h1>
-          <p className="mt-4 text-lg">
-            This is API built with Next.js and MongoDB.
-          </p>
-        </div>
+{children}
       </body>
     </html>
   );
