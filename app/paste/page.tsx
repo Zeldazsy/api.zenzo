@@ -31,13 +31,22 @@ export default function PastePage() {
           onChange={(e) => setLicense(e.target.value)}
         />
         <button
-          onClick={() => {
-            if (license === "zel-เงี่ยน-007") {
-              setVerify(true)
-            } else {
-              alert("Invalid license key")
-            }
-          }}
+onClick={async () => {
+    const res = await fetch("/api/verify-license", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key: license })
+    })
+  
+    const data = await res.json()
+  
+    if (data.valid) {
+      setVerify(true)
+    } else {
+      alert("Invalid license key")
+    }
+  }}
+  
           className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg transition duration-200 w-full sm:w-auto"
         >
           Verify Key

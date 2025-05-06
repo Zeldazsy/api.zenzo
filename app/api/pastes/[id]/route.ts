@@ -24,7 +24,7 @@ export async function PUT(
   const { id } = await context.params
   await connectDB()
   const data = await req.json()
-  const updated = await Paste.findByIdAndUpdate(id, data)
+  const updated = await Paste.findByIdAndUpdate(id, data, { new: true })
   return updated
     ? NextResponse.json(updated)
     : NextResponse.json({ error: 'Not found' }, { status: 404 })
