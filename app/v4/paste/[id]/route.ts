@@ -1,12 +1,11 @@
 import { MongoClient } from "mongodb";
+  import { ObjectId } from "mongodb";
+
 
 const client = new MongoClient(process.env.MONGODB_URI!);
 
 async function connectDB() {
-  if (!db) {
-    db = await client.connect();
-  }
-  return db;
+    return await client.connect();
 }
 
 export async function GET(
@@ -16,7 +15,8 @@ export async function GET(
   const { id } = await context.params;
   
   const dbConnection = await connectDB();
-  const paste = await dbConnection.db("filebin").collection("pastes").findOne({ _id: id }, { projection: { code: 1 } });
+
+  const paste = await dbConnection.db("filebin").collection("pastes").findOne({ _id: new ObjectId(id) }, { projection: { code: 1 } });
 
   if (!paste) {
     return new Response("Not Found", { status: 404 });
