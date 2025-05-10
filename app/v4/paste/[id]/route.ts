@@ -16,7 +16,7 @@ export async function GET(
   const { id } = await context.params;
   
   const dbConnection = await connectDB();
-  const paste = await dbConnection.db().collection("pastes").findOne({ _id: id }, { projection: { code: 1 } });
+  const paste = await dbConnection.db("filebin").collection("pastes").findOne({ _id: id }, { projection: { code: 1 } });
 
   if (!paste) {
     return new Response("Not Found", { status: 404 });
