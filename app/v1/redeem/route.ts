@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     }
 
     const clientInstance = await clientPromise;
-    const db = clientInstance.db('test');
+    const db = clientInstance.db('zenzo');
     const collection = db.collection('allmap');
 
     const alreadyLinked = await collection.findOne({ discord_id });

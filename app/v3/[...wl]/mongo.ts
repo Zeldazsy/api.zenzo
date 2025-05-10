@@ -15,8 +15,8 @@ export default async function connectDB(): Promise<Db> {
 
   const client = new MongoClient(uri);
   await client.connect();
-  const db = client.db("test");
-  console.log('Connected to MongoDB:', "test");
+  const db = client.db("zenzo");
+  console.log('Connected to MongoDB:', "zenzo");
   cachedDb = db;
 
   return db;

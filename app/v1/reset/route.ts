@@ -17,7 +17,7 @@ export async function POST(request: Request) {
 
 async function resetHWID(discord_id: string) {
   const client = await clientPromise;
-  const db = client.db('test');
+  const db = client.db('zenzo');
   const collection = db.collection('allmap');
 
   const now = new Date(Date.now() + 7 * 60 * 60 * 1000);
