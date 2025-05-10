@@ -2,10 +2,6 @@ import { MongoClient } from "mongodb";
 
 const client = new MongoClient(process.env.MONGODB_URI!);
 
-export const config = {
-  runtime: 'edge', // กำหนดให้ใช้ edge runtime
-}
-
 async function connectDB() {
   if (!db) {
     db = await client.connect();
