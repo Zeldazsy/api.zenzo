@@ -122,8 +122,8 @@ export async function GET(req: Request) {
       { $set: { expiredAt: newExpiry } }
     );
 
-    return NextResponse.redirect(new URL(`https://www.zenzohub.pro/getkey?type=success&meg=Key extended 8 hours`, req.url));
+    return NextResponse.redirect(new URL(`https://zenzohub.pro/getkey?type=success&meg=Key extended 8 hours`, req.url));
   }
 await generateKey(discord_id);
-return NextResponse.redirect(new URL(`https://www.zenzohub.pro/getkey?type=success&meg=Key generated`, req.url));
+return NextResponse.redirect(new URL(`https://zenzohub.pro/getkey?type=success&meg=Key generated`, req.url));
 }

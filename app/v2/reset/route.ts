@@ -95,5 +95,5 @@ export async function GET(req: Request) {
   }
 
 await Reset(discord_id);
-return NextResponse.redirect(new URL(`https://www.zenzohub.pro/getkey?type=success&meg=Reset HWID Successfuly`));
+return NextResponse.redirect(new URL(`https://zenzohub.pro/getkey?type=success&meg=Reset HWID Successfuly`));
 }
